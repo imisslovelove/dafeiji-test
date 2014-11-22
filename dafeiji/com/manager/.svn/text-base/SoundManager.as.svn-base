@@ -1,0 +1,124 @@
+package com.manager 
+{
+	import flash.events.ErrorEvent;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.media.SoundMixer;
+	import flash.media.SoundTransform;
+	import flash.net.URLRequest;
+	import flash.utils.getDefinitionByName;
+	
+	/**
+	 * 声音管理类
+	 * @author Mack 358111542@qq.com
+	 * 2013年8月30日 09:37:32
+	 */
+	public class SoundManager 
+	{
+		/**
+		 * 背景音乐
+		 */
+		public var soundBg:Sound;
+		/**
+		 * 背景音乐控制器
+		 */
+		public var soundChannelBg:SoundChannel;
+		/**
+		 * 音效1
+		 */
+		public var soundEff:Sound;
+		/**
+		 * 音效1控制器
+		 */
+		public var soundChannelEff:SoundChannel;
+		/**
+		 * 音效2
+		 */
+		public var soundEff2:Sound;
+		/**
+		 * 音效2控制器
+		 */
+		public var soundChannelEff2:SoundChannel;
+		
+		
+		public function SoundManager() 
+		{
+			
+		}
+		
+		/**
+		 * 销毁
+		 */
+		public function destroy():void
+		{
+			soundBg = null;
+			soundChannelBg = null;
+			soundEff = null;
+			soundChannelEff = null;
+			soundEff2 = null;
+			soundChannelEff2 = null;
+		}
+		
+		public function initBg(path:String):void
+		{
+			soundBg = new Sound();
+			soundBg.load(new URLRequest(path));
+			soundChannelBg = new SoundChannel();
+		}
+		
+		public function palyBg():void
+		{
+			soundChannelBg = soundBg.play();
+			soundChannelBg.addEventListener(Event.SOUND_COMPLETE, soundBgCompleteHandler);
+		}
+		
+		private function soundBgCompleteHandler(e:Event):void 
+		{
+			soundChannelBg.removeEventListener(Event.SOUND_COMPLETE, soundBgCompleteHandler);
+			soundChannelBg = soundBg.play();
+			soundChannelBg.addEventListener(Event.SOUND_COMPLETE, soundBgCompleteHandler);
+		}
+		
+		public function stopBg():void
+		{
+			soundChannelBg.stop();
+		}
+		
+		public function initEff(path:String):void
+		{
+			soundEff = new Sound();
+			soundEff.load(new URLRequest(path));
+			soundChannelEff = new SoundChannel();
+		}
+		
+		public function palyEff():void
+		{
+			soundChannelEff = soundEff.play();			
+		}		
+		
+		public function stopEff():void
+		{
+			soundChannelEff.stop();
+		}
+		
+		public function initEff2(path:String):void
+		{
+			soundEff2 = new Sound();
+			soundEff2.load(new URLRequest(path));
+			soundChannelEff2 = new SoundChannel();
+		}
+		
+		public function palyEff2():void
+		{
+			soundChannelEff2 = soundEff2.play();			
+		}		
+		
+		public function stopEff2():void
+		{
+			soundChannelEff2.stop();
+		}
+		
+	}
+}
